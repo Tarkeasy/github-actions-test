@@ -23,14 +23,18 @@ jobs:
       - name: Checkout to the repo
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: npm install
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
       - name: Run tests
-        run: npm run test
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: test
       - name: Store my-artifact
         uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: public
+          path: public/
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
