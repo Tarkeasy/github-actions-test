@@ -57,12 +57,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: my-artifact
-          path: public/download
+          path: public
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: my-stage-github-actions-test #Must be unique in Heroku
           heroku_email: papamafii2@gmail.com
-          appdir: public/download
 
