@@ -31,14 +31,14 @@ jobs:
         uses: borales/actions-yarn@v2.3.0
         with:
           cmd: test
+        env:
+          CI: false
       - name: Run build
         uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build
       - name: Store my-artifact
         uses: actions/upload-artifact@v2
-        env:
-          CI: false
         with:
           name: my-artifact
           path: build/**/*
@@ -65,14 +65,14 @@ jobs:
           node-version: ${{matrix.node-version}}
       - name: Checkout to the repo
         uses: actions/checkout@v2
+        env:
+          CI: false
       - name: Run build
         uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build
       - name: Download my-artifact
         uses: actions/download-artifact@v2
-        env:
-          CI: false
         with:
           name: my-artifact
           path: build
