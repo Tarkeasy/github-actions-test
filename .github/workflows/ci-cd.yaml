@@ -1,0 +1,68 @@
+name: Main CI/CD pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      Release:
+        description: Provide release version
+        required: true
+
+jobs:
+  deploy-dev:
+    environment:
+      name: dev
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Checkout to the repo
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm run test
+      - name: Store my-artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: public
+      - name: Deploy
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: my-github-actions-test #Must be unique in Heroku
+          heroku_email: papamafii2@gmail.com
+
+  deploy-stage:
+    environment:
+      name: stage
+    needs: [deploy-dev]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Checkout to the repo
+        uses: actions/checkout@v2
+      - name: Download my-artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+          path: public/download
+      - name: Deploy
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: my-stage-github-actions-test #Must be unique in Heroku
+          heroku_email: papamafii2@gmail.com
+          appdir: public/download
+
