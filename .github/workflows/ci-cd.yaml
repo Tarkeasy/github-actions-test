@@ -48,6 +48,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: my-github-actions-test #Must be unique in Heroku
           heroku_email: papamafii2@gmail.com
+          appdir: build
 
   deploy-stage:
     environment:
@@ -76,4 +77,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: my-stage-github-actions-test #Must be unique in Heroku
           heroku_email: papamafii2@gmail.com
+          appdir: build
 
