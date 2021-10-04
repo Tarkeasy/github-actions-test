@@ -37,6 +37,8 @@ jobs:
           cmd: build
       - name: Store my-artifact
         uses: actions/upload-artifact@v2
+        env:
+          CI: false
         with:
           name: my-artifact
           path: build/**/*
@@ -69,6 +71,8 @@ jobs:
           cmd: build
       - name: Download my-artifact
         uses: actions/download-artifact@v2
+        env:
+          CI: false
         with:
           name: my-artifact
           path: build
