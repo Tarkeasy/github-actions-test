@@ -11,6 +11,7 @@ jobs:
   deploy-dev:
     environment:
       name: dev
+      url: https://my-github-actions-test.herokuapp.com/
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: public/
+          path: public/**/*
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
@@ -45,6 +46,7 @@ jobs:
   deploy-stage:
     environment:
       name: stage
+      url: https://my-stage-github-actions-test.herokuapp.com/
     needs: [deploy-dev]
     runs-on: ubuntu-latest
     strategy:
