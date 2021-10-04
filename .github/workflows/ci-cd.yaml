@@ -48,7 +48,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: my-github-actions-test #Must be unique in Heroku
           heroku_email: papamafii2@gmail.com
-          buildpack: true
+          appdir: build
 
   deploy-stage:
     environment:
@@ -60,22 +60,18 @@ jobs:
       matrix:
         node-version: [14.x]
     steps:
-      - name: Install node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{matrix.node-version}}
       - name: Checkout to the repo
         uses: actions/checkout@v2
       - name: Download my-artifact
         uses: actions/download-artifact@v2
         with:
           name: my-artifact
-          path: build
+          path: dist
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: my-stage-github-actions-test #Must be unique in Heroku
           heroku_email: papamafii2@gmail.com
-          buildpack: true
+          appdir: dist
 
