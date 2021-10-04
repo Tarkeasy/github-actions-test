@@ -65,11 +65,6 @@ jobs:
           node-version: ${{matrix.node-version}}
       - name: Checkout to the repo
         uses: actions/checkout@v2
-
-      - name: Run build
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build
       - name: Download my-artifact
         uses: actions/download-artifact@v2
         with:
