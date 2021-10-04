@@ -55,9 +55,6 @@ jobs:
       url: https://my-stage-github-actions-test.herokuapp.com/
     needs: [deploy-dev]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
       - name: Checkout to the repo
         uses: actions/checkout@v2
@@ -72,6 +69,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: my-stage-github-actions-test #Must be unique in Heroku
           heroku_email: papamafii2@gmail.com
-          appdir: build
-          delay: 10
 
